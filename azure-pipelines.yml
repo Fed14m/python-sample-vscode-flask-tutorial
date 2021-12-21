@@ -50,12 +50,16 @@ stages:
     - task: ArchiveFiles@2
       displayName: 'Archive files'
       inputs:
-        rootFolderOrFile: '$(projectRoot)'
-        includeRootFolder: false
-        archiveType: zip
-        archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
-        replaceExistingArchive: true
-
+      rootFolderOrFile: '$(Build.SourcesDirectory)'
+     includeRootFolder: false
+     archiveType: 'zip'
+     archiveFile: '$(Build.ArtifactStagingDirectory)/Application$(Build.BuildId).zip'
+     replaceExistingArchive: true
+    verbose: # (no value); this input is optional
+- publish: $(Build.ArtifactStagingDirectory)/Application$(Build.BuildId).zip
+   displayName: 'Upload package'
+   artifact: drop
+   
     - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
       displayName: 'Upload package'
       artifact: drop
